@@ -28,10 +28,24 @@ public class LogoutServlet extends HttpServlet
 		
 		request.getRequestDispatcher("index.html").include(request, response);
 		HttpSession session = request.getSession();
-		session.invalidate();
-		out.print("<center>");
-		out.print("<h2> You are successfully logged out!</h2>");
-		out.print("</center>");
+		if(session.getAttribute("name") != null)
+		{
+			session.invalidate();
+			out.print("<center>");
+			out.print("<h2> You are successfully logged out!</h2>");
+			out.print("</center>");
+		}
+		else
+		{
+			out.print("<center>");
+			out.print("<h2>You aren't logged in!</h2>");
+			out.print("</center>");
+		}
 		out.close();
+	}
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		doGet(request,response);
 	}
 }
